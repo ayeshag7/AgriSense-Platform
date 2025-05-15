@@ -16,7 +16,7 @@ const DropdownUser = () => {
         className="flex items-center gap-3"
       >
         <span className="hidden lg:block text-sm font-medium text-black">
-          Ahmad Nawaz
+          Asim Raza
         </span>
 
         <span className="h-10 w-10 rounded-full overflow-hidden border border-gray-300">

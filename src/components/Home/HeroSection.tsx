@@ -1,23 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import TorusCanvas from "../ui/TorusCanvas";
 
 export default function HeroSection() {
   return (
-    <div className="relative h-96 md:h-[calc(100vh-85px)] w-full bg-black text-white flex items-center justify-center px-4">
-      <div className="max-w-5xl w-full flex flex-col md:flex-row items-center justify-center gap-4">
+    <div className="relative h-96 md:h-[calc(100vh-80px)] w-full bg-black text-white flex items-center justify-center px-4">
+      <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-center">
+
         {/* Left: Hero Image */}
-        <div className="hidden md:flex justify-center">
-          <Image
-            src="/images/hero-ring.png"
-            alt="Hero ring"
-            className="w-64 opacity-80"
-            width={300}
-            height={300}
-            priority
-          />
+       <div className="hidden md:flex justify-center w-[500px] h-[500px]">
+          <TorusCanvas/>
         </div>
+
 
         {/* Right: Animated Text Content */}
         <motion.div

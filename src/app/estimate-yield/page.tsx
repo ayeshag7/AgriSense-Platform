@@ -13,7 +13,7 @@ export default function EstimatedYieldPage() {
   }, []);
 
   return (
-    <main className="min-h-screen px-10 py-12 flex flex-col items-center">
+    <main className="min-h-screen p-8 flex flex-col items-center">
         <div className='bg-white rounded-lg shadow-sm py-10 px-8 space-y-6 border border-gray-300'>
             <h1 className="text-2xl font-bold text-gray-800 mb-10">Estimated Yield Report</h1>
 

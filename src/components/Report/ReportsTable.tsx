@@ -73,15 +73,15 @@ export default function ReportsTable() {
         <h2 className="text-xl font-bold text-gray-800">Recent Field Reports</h2>
         <button
           onClick={downloadCSV}
-          className="flex items-center gap-2 px-4 py-2 border border-[#64FF64] text-black rounded-md hover:bg-[#64FF64] transition"
+          className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-[#64FF64] text-black rounded-md hover:bg-[#64FF64] transition"
         >
           <FiDownload className="text-lg" />
           Download CSV
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm text-left border">
+      <div className="overflow-x-auto border rounded">
+        <table className="min-w-full text-sm text-left">
           <thead className="bg-[#f4fef4] text-gray-800 uppercase">
             <tr>
               <th className="px-4 py-2">Field</th>

@@ -24,22 +24,18 @@ const Header = () => {
         </Link>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           {/* Login Button */}
-          <Link href="/">
-            <button
-              type="button"
-              className="text-white border border-[#64FF64] bg-transparent font-medium rounded-lg text-sm px-3 py-1.5 text-center mx-2"
-            >
-              Login
-            </button>
+          <Link
+            href="/login"
+            className="text-white border border-[#64FF64] bg-transparent font-medium rounded-lg text-sm px-3 py-1.5 text-center mx-2 hover:cursor-pointer"
+          >
+            Login
           </Link>
           {/* Get Started Button */}
-          <Link href="/">
-            <button
-              type="button"
-              className="text-black bg-[#64FF64] font-medium rounded-lg text-sm px-3 py-1.5 text-center"
-            >
-              Get Started
-            </button>
+          <Link
+            href="/signup"
+            className="text-black bg-[#64FF64] font-medium rounded-lg text-sm px-3 py-1.5 text-center hover:cursor-pointer"
+          >
+            Get Started
           </Link>
           {/* Mobile Menu Toggle */}
           <button

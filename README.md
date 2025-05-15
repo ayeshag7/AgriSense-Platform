@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AgriSense — AI-Powered Crop Health Monitoring Platform
+
+AgriSense is a modern, production-grade [Next.js](https://nextjs.org) application designed to empower farmers through AI-driven image-based crop disease diagnosis, yield estimation, and actionable reporting.
+
+Built using [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) with the App Router and TypeScript.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Clone the repository and install dependencies:
 
-```bash
+```
+npm install
+```
+Run the development server:
+
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open your browser at http://localhost:3000 to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+1. Upload crop images for instant disease detection
+2. AI-powered yield estimation
+3. Timeline-based crop health tracking
+4. Downloadable PDF diagnosis reports
+5. Visual landing experience with 3D animations and parallax effects
+6. Farmer testimonials and interactive UI
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
+* `app/`: Route-based layout with page.tsx, layout.tsx, and nested pages
+* `components/`: Reusable UI and animation components (carousel, parallax, hero, etc.)
+* `public/`: Static assets including images and videos
+* `styles/`: Global Tailwind styles and custom CSS
 
-## Learn More
+## Tech Stack
+* Next.js 14
+* TypeScript
+* Tailwind CSS
+* Framer Motion for animations
+* @tabler/icons-react for clean iconography
+* @react-three/fiber + drei for 3D visualizations
+* Chart.js for graphic insights
 
-To learn more about Next.js, take a look at the following resources:
+##  Development Notes
+* Fonts are loaded and optimized using next/font, currently using Geist.
+* All components are built with responsiveness in mind. Mobile-first design supported.
+* Use `npm run build` and `npm start` to build and preview the production app.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

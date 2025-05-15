@@ -8,6 +8,8 @@ export default function UploadBox() {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [statusIndex, setStatusIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [pendingFile, setPendingFile] = useState<File | null>(null);
   const router = useRouter();
 
   const statusTexts = [
@@ -19,31 +21,54 @@ export default function UploadBox() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setPreview(result);
-        // Store in sessionStorage to access on diagnosis page
-        sessionStorage.setItem('uploadedImage', result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    if (preview) {
+      setPendingFile(file);
+      setShowModal(true);
     } else {
-      setPreview(null);
+      readAndSetImage(file);
     }
+  };
+
+  const readAndSetImage = (file: File) => {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      try {
+        sessionStorage.removeItem('uploadedImage'); // Prevent quota overflow
+        const result = reader.result as string;
+        sessionStorage.setItem('uploadedImage', result);
+        setPreview(result);
+      } catch (err) {
+        console.error('Storage error:', err);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDiagnose = () => {
     setLoading(true);
-
     const interval = setInterval(() => {
       setStatusIndex((prev) => (prev + 1) % statusTexts.length);
     }, 3000);
-
     setTimeout(() => {
       clearInterval(interval);
       router.push('/diagnosis');
     }, 12000);
+  };
+
+  const confirmReplaceImage = () => {
+    if (pendingFile) {
+      readAndSetImage(pendingFile);
+      setShowModal(false);
+      setPendingFile(null);
+    }
+  };
+
+  const cancelReplaceImage = () => {
+    setShowModal(false);
+    setPendingFile(null);
   };
 
   if (loading) {
@@ -58,8 +83,7 @@ export default function UploadBox() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 pt-6 pb-12">
-      {/* Heading */}
+    <div className="flex flex-col items-center justify-center px-6 pt-6 pb-12 relative">
       <h1 className="text-2xl font-bold mb-8">Upload an Image of Your Crop</h1>
 
       <div className="w-full max-w-2xl bg-white border border-dashed border-[#64FF64] rounded-xl p-6 text-center transition shadow-sm hover:shadow-lg group">
@@ -110,6 +134,39 @@ export default function UploadBox() {
           </svg>
           Diagnose
         </button>
+      )}
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+              Replace Uploaded Image?
+            </h2>
+            <p className="text-sm text-gray-600 mb-6">
+              You already uploaded an image. Do you want to replace it?
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => {
+                  sessionStorage.removeItem('uploadedImage'); // Clear old image
+                  setShowModal(false);
+                  setPendingFile(null);
+                  window.location.reload();
+                }}
+                className="px-4 py-2 bg-[#64FF64] text-black rounded hover:bg-[#53e653]"
+              >
+                Replace
+              </button>
+              <button
+                onClick={cancelReplaceImage}
+                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

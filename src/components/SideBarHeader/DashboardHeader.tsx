@@ -10,13 +10,24 @@ export default function DashboardHeader() {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200">
       {/* Search Bar */}
-      <div className="flex-1 max-w-md">
+      <div className="flex-1 max-w-md relative">
+        <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg
+            className="w-5 h-5 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.6 3.6a7.5 7.5 0 0012.9 12.9z" />
+          </svg>
+        </span>
         <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#64FF64]"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#64FF64]"
         />
       </div>
 

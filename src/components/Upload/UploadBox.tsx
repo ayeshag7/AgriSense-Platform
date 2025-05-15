@@ -10,7 +10,10 @@ export default function UploadBox() {
   const [statusIndex, setStatusIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [pendingFile, setPendingFile] = useState<File | null>(null);
+  const [error, setError] = useState('');
   const router = useRouter();
+
+  const MAX_IMAGE_SIZE_MB = 4;
 
   const statusTexts = [
     'Diagnosing crop image for visible disease symptoms...',
@@ -23,6 +26,13 @@ export default function UploadBox() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > MAX_IMAGE_SIZE_MB) {
+      setError(`Image is too large (${fileSizeMB.toFixed(2)}MB). Max allowed is ${MAX_IMAGE_SIZE_MB}MB.`);
+      return;
+    }
+
+    setError('');
     if (preview) {
       setPendingFile(file);
       setShowModal(true);
@@ -32,16 +42,16 @@ export default function UploadBox() {
   };
 
   const readAndSetImage = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
     const reader = new FileReader();
     reader.onloadend = () => {
       try {
-        sessionStorage.removeItem('uploadedImage'); // Prevent quota overflow
+        sessionStorage.removeItem('uploadedImage');
         const result = reader.result as string;
         sessionStorage.setItem('uploadedImage', result);
         setPreview(result);
       } catch (err) {
         console.error('Storage error:', err);
+        setError('Failed to store image. Try a smaller one.');
       }
     };
     reader.readAsDataURL(file);
@@ -60,9 +70,8 @@ export default function UploadBox() {
 
   const confirmReplaceImage = () => {
     if (pendingFile) {
-      readAndSetImage(pendingFile);
-      setShowModal(false);
-      setPendingFile(null);
+      sessionStorage.removeItem('uploadedImage');
+      window.location.reload(); // force refresh to allow new file
     }
   };
 
@@ -102,8 +111,10 @@ export default function UploadBox() {
           <p className="text-gray-800 font-medium group-hover:text-black">
             Drag & Drop or Click to Upload
           </p>
-          <p className="text-sm text-gray-500">(JPG, JPEG, PNG only)</p>
+          <p className="text-sm text-gray-500">(JPG, JPEG, PNG only, Max {MAX_IMAGE_SIZE_MB}MB)</p>
         </label>
+
+        {error && <p className="text-red-600 mt-4">{error}</p>}
 
         {preview && (
           <img
@@ -140,20 +151,13 @@ export default function UploadBox() {
       {showModal && (
         <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
-              Replace Uploaded Image?
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Replace Uploaded Image?</h2>
             <p className="text-sm text-gray-600 mb-6">
               You already uploaded an image. Do you want to replace it?
             </p>
             <div className="flex justify-center gap-4">
               <button
-                onClick={() => {
-                  sessionStorage.removeItem('uploadedImage'); // Clear old image
-                  setShowModal(false);
-                  setPendingFile(null);
-                  window.location.reload();
-                }}
+                onClick={confirmReplaceImage}
                 className="px-4 py-2 bg-[#64FF64] text-black rounded hover:bg-[#53e653]"
               >
                 Replace

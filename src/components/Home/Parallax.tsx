@@ -91,7 +91,7 @@ export default function Parallax() {
                 style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
               >
                 Post-harvest losses in key Pakistani crops exceed Rs 496 billion annually.
-                AgriSense helps prevent this by identifying disease early, tracking crop health over time,
+                AgriSense helps prevent this by identifying diseases early, tracking crop health over time,
                 and guiding precise interventions that preserve yields.
               </p>
             </div>

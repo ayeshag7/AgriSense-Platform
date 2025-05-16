@@ -42,18 +42,18 @@ const reports = [
 ];
 
 export default function ReportsTable() {
-  const downloadCSV = () => {
+  const downloadSingleReport = (report: typeof reports[0]) => {
     const csv = [
       ['Field', 'Date', 'Type', 'Crop', 'Disease', 'Yield', 'Status'],
-      ...reports.map(r => [
-        r.field,
-        r.date,
-        r.type,
-        r.crop,
-        r.disease || '-',
-        r.yield || '-',
-        r.status,
-      ]),
+      [
+        report.field,
+        report.date,
+        report.type,
+        report.crop,
+        report.disease || '-',
+        report.yield || '-',
+        report.status,
+      ],
     ]
       .map(row => row.join(','))
       .join('\n');
@@ -62,7 +62,7 @@ export default function ReportsTable() {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'agrisense-reports.csv';
+    a.download = `${report.field.toLowerCase().replace(/\s+/g, '-')}-report.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
@@ -71,40 +71,34 @@ export default function ReportsTable() {
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-xl font-bold text-gray-800">Recent Field Reports</h2>
-        <button
-          onClick={downloadCSV}
-          className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-[#64FF64] text-black rounded-md hover:bg-[#64FF64] transition"
-        >
-          <FiDownload className="text-lg" />
-          Download CSV
-        </button>
       </div>
 
       <div className="overflow-x-auto border rounded">
         <table className="min-w-full text-sm text-left">
-          <thead className="bg-[#f4fef4] text-gray-800 uppercase">
+          <thead className="bg-[#d8f8d8] text-gray-800 uppercase">
             <tr>
-              <th className="px-4 py-2">Field</th>
-              <th className="px-4 py-2">Date</th>
-              <th className="px-4 py-2">Type</th>
-              <th className="px-4 py-2">Crop</th>
-              <th className="px-4 py-2">Disease</th>
-              <th className="px-4 py-2">Yield</th>
-              <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-4">Field</th>
+              <th className="px-4 py-4">Date</th>
+              <th className="px-4 py-4">Type</th>
+              <th className="px-4 py-4">Crop</th>
+              <th className="px-4 py-4">Disease</th>
+              <th className="px-4 py-4">Yield</th>
+              <th className="px-4 py-4">Status</th>
+              <th className="px-4 py-4">Download</th>
             </tr>
           </thead>
           <tbody>
             {reports.map((report, idx) => (
               <tr key={idx} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-2">{report.field}</td>
-                <td className="px-4 py-2">{report.date}</td>
-                <td className="px-4 py-2">{report.type}</td>
-                <td className="px-4 py-2">{report.crop}</td>
-                <td className="px-4 py-2">{report.disease || '-'}</td>
-                <td className="px-4 py-2">{report.yield || '-'}</td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-4">{report.field}</td>
+                <td className="px-4 py-4">{report.date}</td>
+                <td className="px-4 py-4">{report.type}</td>
+                <td className="px-4 py-4">{report.crop}</td>
+                <td className="px-4 py-4">{report.disease || '-'}</td>
+                <td className="px-4 py-4">{report.yield || '-'}</td>
+                <td className="px-4 py-4">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    className={`px-2 py-1.5 rounded text-xs font-semibold ${
                       report.status === 'Healthy'
                         ? 'bg-green-100 text-green-700'
                         : 'bg-red-100 text-red-700'
@@ -112,6 +106,15 @@ export default function ReportsTable() {
                   >
                     {report.status}
                   </span>
+                </td>
+                <td className="px-4 py-4 text-center">
+                  <button
+                    onClick={() => downloadSingleReport(report)}
+                    className="cursor-pointer text-green-600 hover:text-green-800"
+                    title="Download this report"
+                  >
+                    <FiDownload className="text-lg" />
+                  </button>
                 </td>
               </tr>
             ))}

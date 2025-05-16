@@ -32,7 +32,6 @@ const DropdownUser = () => {
           <ul className="flex flex-col">
             {[
               { href: '/profile', label: 'My Profile' },
-              { href: '#', label: 'My Contacts' },
               { href: '/settings', label: 'Account Settings' },
             ].map((item, idx) => (
               <li key={idx}>

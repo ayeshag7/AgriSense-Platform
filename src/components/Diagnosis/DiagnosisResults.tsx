@@ -45,7 +45,7 @@ export default function DiagnosisResults({ image }: DiagnosisResultsProps) {
       {/* Diagnosis Info */}
       <ul className="text-base space-y-2 text-gray-700 mt-4">
         <li><strong>Detected Crop:</strong> Wheat</li>
-        <li><strong>Detected Disease:</strong> Leaf Blight</li>
+        <li><strong>Detected Disease:</strong><span className='bg-[#64FF64] text-black font-bold rounded px-2 py-1 ml-2'>Leaf Blight</span></li>
         <li><strong>Confidence Score:</strong> 91%</li>
         <li>
           <strong>Severity Level:</strong>{' '}

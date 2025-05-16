@@ -75,7 +75,7 @@ export default function ReportsTable() {
 
       <div className="overflow-x-auto border rounded">
         <table className="min-w-full text-sm text-left">
-          <thead className="bg-[#d8f8d8] text-gray-800 uppercase">
+          <thead className="bg-[#d8f8d8] text-gray-800">
             <tr>
               <th className="px-4 py-4">Field</th>
               <th className="px-4 py-4">Date</th>

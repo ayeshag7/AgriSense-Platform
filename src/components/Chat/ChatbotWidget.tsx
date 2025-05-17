@@ -48,7 +48,7 @@ export default function ChatbotWidget() {
             />
             AgriBot
           </div>
-          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-[#64FF64] shadow">
+          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-black shadow">
             <Image
               src="/images/user-profile.png"
               alt="User"

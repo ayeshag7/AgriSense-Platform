@@ -51,7 +51,7 @@ export default function EstimatedYieldPage() {
                 </p>
 
                 {/* Generate Report Button */}
-                <button className="cursor-pointer px-4 py-2 border-2 border-[#64FF64] text-black rounded-md hover:bg-[#64FF64] font-semibold transition">
+                <button className="cursor-pointer px-4 py-2 border-2 border-[#64FF64] text-black rounded-md hover:bg-[#64FF64] font-bold transition">
                     Generate Yield Report
                 </button>
                 </div>

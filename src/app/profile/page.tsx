@@ -4,8 +4,11 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import Link from 'next/link';
 import ProfileOverview from '@/components/Profile/ProfileOverview';
 import EditProfileForm from '@/components/Profile/EditProfileForm';
+import { useAuthGuard } from "../../lib/useAuthGuard";
 
 export default function ProfilePage() {
+  useAuthGuard(); // Protects route
+  
   return (
     <main className="min-h-screen px-10 py-12 bg-gray-100">
       {/* Back Arrow */}

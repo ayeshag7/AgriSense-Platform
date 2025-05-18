@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import DiagnosisResults from '@/components/Diagnosis/DiagnosisResults';
 import ReportOptions from '@/components/Diagnosis/ReportOptions';
 import AIChatbot from '@/components/Diagnosis/AIChatbot';
+import { useAuthGuard } from "../../lib/useAuthGuard";
 
 export default function DiagnosisPage() {
+  useAuthGuard(); // Protects route
+  
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {

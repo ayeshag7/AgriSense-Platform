@@ -6,8 +6,11 @@ import AccountSettings from '@/components/Settings/AccountSettings';
 import NotificationSettings from '@/components/Settings/NotificationSettings';
 import PrivacySecuritySettings from '@/components/Settings/PrivacySecuritySettings';
 import SystemInfo from '@/components/Settings/SystemInfo';
+import { useAuthGuard } from "../../lib/useAuthGuard";
 
 export default function SettingsPage() {
+  useAuthGuard(); // Protects route
+  
   return (
     <main className="min-h-screen px-10 py-12 space-y-10">
       {/* Back Arrow */}

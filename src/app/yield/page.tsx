@@ -2,8 +2,11 @@
 'use client';
 
 import YieldBox from '@/components/Yield/YieldBox';
+import { useAuthGuard } from "../../lib/useAuthGuard";
 
 export default function YieldPage() {
+  useAuthGuard(); // Protects route
+  
   return (
     <main className="min-h-screen bg-gray-100 p-12">
       <YieldBox />

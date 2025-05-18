@@ -3,8 +3,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import AIChatbot from '@/components/Diagnosis/AIChatbot';
+import { useAuthGuard } from "../../lib/useAuthGuard";
 
 export default function EstimatedYieldPage() {
+  useAuthGuard(); // Protects route
+
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {

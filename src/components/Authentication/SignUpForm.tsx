@@ -1,8 +1,69 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { signUpWithEmail, signInWithGoogle } from '@/lib/authentication';
 
 export default function SignUpForm() {
+  const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    fullName: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [agreePolicy, setAgreePolicy] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!agreePolicy) {
+      toast.error('You must agree to the Privacy Policy and Terms of Use.');
+      return;
+    }
+
+    const { email, fullName, password, confirmPassword } = formData;
+
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { user } = await signUpWithEmail(email, password, fullName);
+      toast.success(`Account created! Welcome, ${user.displayName || 'User'}`);
+      setTimeout(() => router.push('/login'), 1000);
+    } catch (err: any) {
+      toast.error(`Sign-up failed: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+  setLoading(true);
+  try {
+    const { user } = await signInWithGoogle();
+    toast.success(`Signed in as ${user.displayName || user.email}`);
+    setTimeout(() => router.push('/login'), 1000);
+  } catch (err: any) {
+    toast.error(`Google sign-in failed: ${err.message}`);
+  } finally {
+    setLoading(false);
+  }
+  };
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-black py-12 px-4">
       <div className="w-full max-w-md space-y-16 text-white">
@@ -18,15 +79,17 @@ export default function SignUpForm() {
         </div>
 
         {/* Form */}
-        <form className="space-y-8">
-          {/* Email & Name */}
+        <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-white mb-1">Your email</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="name@company.com"
-                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md shadow-sm focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
                 required
               />
             </div>
@@ -34,21 +97,26 @@ export default function SignUpForm() {
               <label className="block text-sm font-medium text-white mb-1">Full Name</label>
               <input
                 type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
                 placeholder="e.g. Ayesha Khan"
-                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md shadow-sm focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
                 required
               />
             </div>
           </div>
 
-          {/* Password & Confirm Password */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-white mb-1">Password</label>
               <input
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md shadow-sm focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
                 required
               />
             </div>
@@ -56,8 +124,11 @@ export default function SignUpForm() {
               <label className="block text-sm font-medium text-white mb-1">Confirm Password</label>
               <input
                 type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md shadow-sm focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+                className="w-full px-3 py-2 bg-black text-white border border-white rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
                 required
               />
             </div>
@@ -73,7 +144,8 @@ export default function SignUpForm() {
           {/* Google Sign Up */}
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 mb-12 border border-white rounded-md text-white hover:bg-white hover:text-black transition"
+            onClick={handleGoogleSignUp}
+            className="cursor-pointer w-full flex items-center justify-center gap-2 px-4 py-2 mb-12 border border-white rounded-md text-white hover:bg-white hover:text-black transition"
           >
             <img src="/images/google-icon.svg" alt="Google" className="w-5 h-5" />
             Sign up with Google
@@ -82,7 +154,13 @@ export default function SignUpForm() {
           {/* Terms */}
           <div className="space-y-4 mt-4 text-sm text-gray-300">
             <label className="flex items-start gap-2">
-              <input type="checkbox" className="mt-1" required />
+              <input
+                type="checkbox"
+                className="mt-1"
+                checked={agreePolicy}
+                onChange={(e) => setAgreePolicy(e.target.checked)}
+                required
+              />
               <span>
                 By signing up, you agree to AgriSense’s{' '}
                 <Link href="#" className="text-[#64FF64] hover:underline">Terms of Use</Link>{' '}
@@ -100,9 +178,10 @@ export default function SignUpForm() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-[#64FF64] text-black font-medium rounded-md hover:bg-[#53e653] transition"
+            disabled={loading}
+            className="cursor-pointer w-full py-2 px-4 bg-[#64FF64] text-black font-medium rounded-md hover:bg-[#53e653] transition"
           >
-            Create an account
+            {loading ? 'Creating account...' : 'Create an account'}
           </button>
         </form>
       </div>

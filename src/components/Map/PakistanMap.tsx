@@ -218,7 +218,7 @@ export default function PakistanMap() {
 
   return (
     <div className="px-8 pt-8 flex flex-col justify-start">
-      <h1 className="text-xl font-bold text-gray-800 mb-8 mt-8">
+      <h1 className="text-xl font-bold text-gray-800 dark:text-white mb-8 mt-8">
         Region-Specific Crop Insights
       </h1>
 
@@ -244,12 +244,12 @@ export default function PakistanMap() {
 
         {/* Info Panel */}
         {selectedDistrict && (
-          <div className="mt-8 bg-white border border-gray-300 rounded-lg p-6 shadow-md w-full max-w-5xl">
+          <div className="mt-8 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg p-6 shadow-md w-full max-w-5xl">
             <h2 className="text-xl font-bold text-gray-800 bg-[#64FF64] mb-4 w-fit px-3 py-1 rounded">
               {selectedDistrict.name}
             </h2>
 
-            <div className="space-y-2 text-gray-700">
+            <div className="space-y-2 text-gray-700 dark:text-gray-300">
               <p><strong>Major Crops:</strong> {selectedDistrict.majorCrops.join(', ')}</p>
 
               {selectedDistrict.emergingCrops && (

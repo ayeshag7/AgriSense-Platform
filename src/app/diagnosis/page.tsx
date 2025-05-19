@@ -17,7 +17,7 @@ export default function DiagnosisPage() {
   }, []);
 
   return (
-    <main className="min-h-screen p-8 bg-gray-50 space-y-8">
+    <main className="min-h-screen p-8 bg-gray-100 dark:bg-[#1e1e1e] space-y-8">
       <DiagnosisResults image={image} />
       <ReportOptions />
       <AIChatbot />

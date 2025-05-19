@@ -25,62 +25,62 @@ export default function EditProfileForm() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-300">
-      <h2 className="text-xl font-bold text-gray-800 mb-8">Edit Profile</h2>
+    <div className="bg-white dark:bg-black rounded-lg shadow-md p-6 border border-gray-300 dark:border-gray-700">
+    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-8">Edit Profile</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Row 1: Name + Email */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-1">Full Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
             />
           </div>
         </div>
 
         {/* Row 2: Phone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-1">Phone</label>
           <input
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
           />
         </div>
 
         {/* Row 3: District + Role */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">District / City</label>
+            <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-1">District / City</label>
             <input
               type="text"
               value={district}
               onChange={(e) => setDistrict(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-1">Role</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md bg-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:ring-2 focus:ring-[#64FF64] focus:outline-none"
             >
               <option>Farmer</option>
               <option>Researcher</option>
@@ -92,7 +92,7 @@ export default function EditProfileForm() {
 
         {/* Profile Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Update Profile Image</label>
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-100 mb-2">Update Profile Image</label>
           <input
             type="file"
             accept="image/*"
@@ -109,7 +109,7 @@ export default function EditProfileForm() {
             <img
               src={previewURL}
               alt="Profile Preview"
-              className="mt-4 w-24 h-24 rounded-full object-cover border border-gray-300"
+              className="mt-4 w-24 h-24 rounded-full object-cover border border-gray-300 dark:border-gray-600"
             />
           )}
         </div>
@@ -117,7 +117,7 @@ export default function EditProfileForm() {
         {/* Submit */}
         <button
           type="submit"
-          className="mt-6 px-6 py-2 bg-[#64FF64] text-black font-semibold rounded-md hover:bg-[#53e653] transition"
+          className="cursor-pointer mt-6 px-6 py-2 bg-[#64FF64] text-black font-semibold rounded-md hover:bg-[#53e653] transition"
         >
           Save Changes
         </button>

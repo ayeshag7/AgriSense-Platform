@@ -68,14 +68,16 @@ export default function ReportsTable() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+    <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors duration-300">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-xl font-bold text-gray-800">Recent Field Reports</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+          Recent Field Reports
+        </h2>
       </div>
 
-      <div className="overflow-x-auto border rounded">
-        <table className="min-w-full text-sm text-left">
-          <thead className="bg-[#d8f8d8] text-gray-800">
+      <div className="overflow-x-auto border rounded border-gray-200 dark:border-gray-700">
+        <table className="min-w-full text-sm text-left text-gray-800 dark:text-gray-300">
+          <thead className="bg-[#d8f8d8] dark:bg-[#1e1e1e] text-gray-800 dark:text-gray-200">
             <tr>
               <th className="px-4 py-4">Field</th>
               <th className="px-4 py-4">Date</th>
@@ -89,7 +91,10 @@ export default function ReportsTable() {
           </thead>
           <tbody>
             {reports.map((report, idx) => (
-              <tr key={idx} className="border-t hover:bg-gray-50">
+              <tr
+                key={idx}
+                className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#1e1e1e]"
+              >
                 <td className="px-4 py-4">{report.field}</td>
                 <td className="px-4 py-4">{report.date}</td>
                 <td className="px-4 py-4">{report.type}</td>
@@ -100,8 +105,8 @@ export default function ReportsTable() {
                   <span
                     className={`px-2 py-1.5 rounded text-xs font-semibold ${
                       report.status === 'Healthy'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
+                        ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
+                        : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
                     }`}
                   >
                     {report.status}
@@ -110,7 +115,7 @@ export default function ReportsTable() {
                 <td className="px-4 py-4 text-center">
                   <button
                     onClick={() => downloadSingleReport(report)}
-                    className="cursor-pointer text-green-600 hover:text-green-800"
+                    className="cursor-pointer text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300"
                     title="Download this report"
                   >
                     <FiDownload className="text-lg" />

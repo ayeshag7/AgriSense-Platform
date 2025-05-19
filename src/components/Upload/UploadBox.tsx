@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiUploadCloud } from 'react-icons/fi';
 
@@ -71,7 +71,7 @@ export default function UploadBox() {
   const confirmReplaceImage = () => {
     if (pendingFile) {
       sessionStorage.removeItem('uploadedImage');
-      window.location.reload(); // force refresh to allow new file
+      window.location.reload();
     }
   };
 
@@ -82,9 +82,9 @@ export default function UploadBox() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] bg-gray-100 rounded-xl px-6 py-6 text-center">
+      <div className="flex flex-col items-center justify-center h-[60vh] bg-gray-100 dark:bg-[#1e1e1e] rounded-xl px-6 py-6 text-center transition-colors duration-300">
         <div className="animate-spin rounded-full h-14 w-14 border-t-4 border-b-4 border-[#64FF64] mb-4" />
-        <p className="text-lg font-semibold text-gray-800">
+        <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
           {statusTexts[statusIndex]}
         </p>
       </div>
@@ -93,9 +93,9 @@ export default function UploadBox() {
 
   return (
     <div className="flex flex-col items-center justify-center px-6 pt-6 pb-12 relative">
-      <h1 className="text-2xl font-bold mb-8">Upload an Image of Your Crop</h1>
+      <h1 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">Upload an Image of Your Crop</h1>
 
-      <div className="w-full max-w-2xl bg-white border border-dashed border-[#64FF64] rounded-xl p-6 text-center transition shadow-sm hover:shadow-lg group">
+      <div className="w-full max-w-2xl bg-white dark:bg-black border border-dashed border-[#64FF64] rounded-xl p-6 text-center transition shadow-sm hover:shadow-lg group">
         <input
           type="file"
           accept=".jpg,.jpeg,.png"
@@ -108,19 +108,21 @@ export default function UploadBox() {
           className="cursor-pointer flex flex-col items-center justify-center space-y-4"
         >
           <FiUploadCloud className="text-5xl text-[#64FF64] group-hover:scale-110 transition-transform" />
-          <p className="text-gray-800 font-medium group-hover:text-black">
+          <p className="text-gray-800 dark:text-gray-200 font-medium group-hover:text-black dark:group-hover:text-white">
             Drag & Drop or Click to Upload
           </p>
-          <p className="text-sm text-gray-500">(JPG, JPEG, PNG only, Max {MAX_IMAGE_SIZE_MB}MB)</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            (JPG, JPEG, PNG only, Max {MAX_IMAGE_SIZE_MB}MB)
+          </p>
         </label>
 
-        {error && <p className="text-red-600 mt-4">{error}</p>}
+        {error && <p className="text-red-600 dark:text-red-400 mt-4">{error}</p>}
 
         {preview && (
           <img
             src={preview}
             alt="Preview"
-            className="mt-6 max-w-xs max-h-64 mx-auto rounded-lg shadow-md border border-gray-300"
+            className="mt-6 max-w-xs max-h-64 mx-auto rounded-lg shadow-md border border-gray-300 dark:border-gray-600"
           />
         )}
       </div>
@@ -128,7 +130,7 @@ export default function UploadBox() {
       {preview && (
         <button
           onClick={handleDiagnose}
-          className="cursor-pointer mt-6 flex items-center gap-2 bg-black text-white border border-[#64FF64] px-5 py-2 rounded-lg hover:bg-[#1a1a1a] transition"
+          className="cursor-pointer mt-6 flex items-center gap-2 bg-black dark:bg-[#64FF64] text-white dark:text-black border border-[#64FF64] px-5 py-2 rounded-lg hover:bg-[#1a1a1a] dark:hover:bg-[#53e653] transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -149,22 +151,22 @@ export default function UploadBox() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-white/10 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Replace Uploaded Image?</h2>
-            <p className="text-sm text-gray-600 mb-6">
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/30 dark:bg-white/10 flex items-center justify-center z-50 transition">
+          <div className="bg-white dark:bg-black rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center border border-gray-300 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">Replace Uploaded Image?</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
               You already uploaded an image. Do you want to replace it?
             </p>
             <div className="flex justify-center gap-4">
               <button
                 onClick={confirmReplaceImage}
-                className="px-4 py-2 bg-[#64FF64] text-black rounded hover:bg-[#53e653]"
+                className="cursor-pointer px-4 py-2 bg-[#64FF64] text-black rounded hover:bg-[#53e653]"
               >
                 Replace
               </button>
               <button
                 onClick={cancelReplaceImage}
-                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                className="cursor-pointer px-4 py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-[#1e1e1e] text-gray-700 dark:text-gray-300"
               >
                 Cancel
               </button>

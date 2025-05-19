@@ -30,33 +30,33 @@ const DropdownUser = () => {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="flex items-center gap-3"
       >
-        <span className="hidden lg:block text-sm font-medium text-black">
+        <span className="hidden lg:block text-sm font-medium text-black dark:text-white">
           Asim Raza
         </span>
 
-        <span className="h-10 w-10 rounded-full overflow-hidden border border-gray-300">
+        <span className="h-10 w-10 rounded-full overflow-hidden border border-gray-300 dark:border-gray-600">
           <Image src="/images/user-profile.png" alt="User" width={40} height={40} />
         </span>
       </button>
 
       {dropdownOpen && (
-        <div className="absolute right-0 top-8 mt-3 w-64 rounded-md border border-gray-200 bg-white shadow-lg z-50">
+        <div className="absolute right-0 top-8 mt-3 w-64 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#161717] shadow-lg z-50">
           <ul className="flex flex-col">
             <li>
               <Link
                 href="/profile"
-                className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#1e1e1e] transition"
               >
-                <FaUser className="text-gray-600" />
+                <FaUser className="text-gray-600 dark:text-gray-300" />
                 My Profile
               </Link>
             </li>
             <li>
               <Link
                 href="/settings"
-                className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#1e1e1e] transition"
               >
-                <FaCog className="text-gray-600" />
+                <FaCog className="text-gray-600 dark:text-gray-300" />
                 Account Settings
               </Link>
             </li>
@@ -64,9 +64,9 @@ const DropdownUser = () => {
 
           <button
             onClick={handleLogout}
-            className="cursor-pointer flex items-center gap-3 w-full text-left px-4 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 transition border-t border-gray-200"
+            className="cursor-pointer flex items-center gap-3 w-full text-left px-4 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#1e1e1e] transition border-t border-gray-200 dark:border-gray-700"
           >
-            <FaSignOutAlt className="text-gray-600" />
+            <FaSignOutAlt className="text-gray-600 dark:text-gray-300" />
             Log Out
           </button>
         </div>

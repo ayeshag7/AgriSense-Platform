@@ -7,7 +7,7 @@ export default function ChatbotPage() {
   useAuthGuard(); // Protects route
 
   return (
-    <main className="h-full pt-8">
+    <main className="h-full bg-gray-100 dark:bg-[#1e1e1e] pt-8">
         <ChatbotWidget/>
     </main>
   );

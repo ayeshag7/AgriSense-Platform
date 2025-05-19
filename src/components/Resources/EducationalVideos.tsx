@@ -1,5 +1,3 @@
-// components/Resources/EducationalVideos.tsx
-
 'use client';
 
 import Link from 'next/link';
@@ -17,10 +15,12 @@ export default function EducationalVideos() {
     <section className="px-8 pt-8">
       {/* Browse All Button */}
       <div className="flex justify-between items-center mb-8 px-2">
-        <h2 className="text-xl font-bold text-gray-800">Educational Videos</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+          Educational Videos
+        </h2>
         <Link
           href="/educational-videos"
-          className="text-sm text-black bg-[#64FF64] px-2 py-1 rounded transition"
+          className="text-sm text-black bg-[#64FF64] px-2 py-1 rounded transition hover:bg-[#53e653]"
         >
           Browse All
         </Link>
@@ -31,7 +31,7 @@ export default function EducationalVideos() {
         {videos.slice(0, 3).map((video) => (
           <div
             key={video.id}
-            className="min-w-[400px] max-w-[440px] flex-shrink-0 border border-gray-300 rounded-lg shadow-md bg-white"
+            className="min-w-[400px] max-w-[440px] flex-shrink-0 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-black transition-colors duration-300"
           >
             <iframe
               src={`https://www.youtube.com/embed/${video.id}`}

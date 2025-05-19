@@ -4,6 +4,7 @@ import { notFound, useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IconArrowLeft } from '@tabler/icons-react';
+import DarkModeToggle from '@/components/ui/DarkModeToggle';
 
 // Simulated guide content data
 const guideData: Record<
@@ -135,17 +136,22 @@ export default function TreatmentGuidePage() {
   if (!guide) return notFound();
 
   return (
-  <main className="min-h-screen px-12 pt-16 pb-20 relative bg-white">
+  <main className="min-h-screen px-12 pt-8 pb-12 bg-gray-100 dark:bg-[#1e1e1e] relative">
 
-    {/* Back Arrow */}
-    <Link
-      href="/treatment-guides"
-      className="absolute top-6 left-10 flex items-center gap-2 text-black hover:text-[#64FF64] transition-colors"
-    >
-      <IconArrowLeft className="w-8 h-8" />
-    </Link>
+    <div className='flex flex-row justify-between items-center mb-8'>
+        {/* Back Arrow */}
+        <Link
+            href="/treatment-guides"
+            className="flex items-center gap-2 text-black dark:text-white hover:text-[#64FF64] dark:hover:text-[#64FF64] transition-colors"
+          >
+            <IconArrowLeft className="w-8 h-8" />
+        </Link>
 
-    <h1 className="text-2xl font-bold text-gray-800 mb-10 mt-6">{guide.title}</h1>
+        {/* Theme Toggle */}
+        <DarkModeToggle/>
+    </div>
+
+    <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-10 mt-6">{guide.title}</h1>
 
     <div className="flex flex-col md:flex-row gap-10 items-start">
       {/* Image */}
@@ -155,20 +161,20 @@ export default function TreatmentGuidePage() {
           alt={guide.title}
           width={400}
           height={300}
-          className="rounded-lg border border-gray-300 shadow-sm w-full object-cover"
+          className="rounded-lg border border-gray-300 dark:border-gray-700 shadow-sm w-full object-cover"
         />
       </div>
 
       {/* Content */}
-      <div className="w-full md:w-7/12 space-y-6 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+      <div className="w-full md:w-7/12 space-y-6 bg-gray-50 dark:bg-[#1a1a1a] p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
         {guide.sections.map((section, index) => (
           <div key={index}>
-            <h2 className="text-md font-bold text-black bg-[#64FF64] px-3 py-1 rounded-md inline-block mb-3">
+            <h2 className="text-md font-bold text-black dark:text-black bg-[#64FF64] px-3 py-1 rounded-md inline-block mb-3">
               {section.heading}
             </h2>
-            {/* Render lists if body contains "- item" style content */}
+
             {section.body.includes('\n-') ? (
-              <ul className="list-disc pl-6 text-gray-700 leading-relaxed space-y-1">
+              <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 leading-relaxed space-y-1">
                 {section.body
                   .split('\n')
                   .filter((line) => line.trim())
@@ -181,7 +187,9 @@ export default function TreatmentGuidePage() {
                   )}
               </ul>
             ) : (
-              <p className="text-gray-700 leading-relaxed">{section.body}</p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                {section.body}
+              </p>
             )}
           </div>
         ))}

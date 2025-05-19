@@ -11,10 +11,21 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip, Legend);
 
 export default function YieldEstimateChart() {
+  const { resolvedTheme } = useTheme();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    if (resolvedTheme) {
+      setTheme(resolvedTheme as 'light' | 'dark');
+    }
+  }, [resolvedTheme]);
+
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
@@ -45,23 +56,36 @@ export default function YieldEstimateChart() {
       legend: {
         position: 'top' as const,
         labels: {
-          color: '#000',
+          color: theme === 'dark' ? '#ffffff' : '#000000',
         },
       },
       title: {
         display: false,
+      },
+      tooltip: {
+        titleColor: theme === 'dark' ? '#ffffff' : '#111827',
+        bodyColor: theme === 'dark' ? '#ffffff' : '#111827',
+        backgroundColor: theme === 'dark' ? '#1f2937' : '#ffffff',
+        borderColor: theme === 'dark' ? '#374151' : '#e5e7eb',
+        borderWidth: 1,
       },
     },
     scales: {
       y: {
         beginAtZero: true,
         ticks: {
-          color: '#000',
+          color: theme === 'dark' ? '#dddddd' : '#000000',
+        },
+        grid: {
+          color: theme === 'dark' ? '#333333' : '#e5e5e5',
         },
       },
       x: {
         ticks: {
-          color: '#000',
+          color: theme === 'dark' ? '#dddddd' : '#000000',
+        },
+        grid: {
+          color: theme === 'dark' ? '#333333' : '#e5e5e5',
         },
       },
     },

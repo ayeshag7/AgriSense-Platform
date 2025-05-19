@@ -15,7 +15,7 @@ export default function ResourcesPage() {
   useAuthGuard(); // Protects route
   
   return (
-    <main className="py-8">
+    <main className="py-8 bg-gray-100 dark:bg-[#1e1e1e]">
         <TreatmentGuidesRow/>
         <EducationalVideos/>
         <PakistanMap />

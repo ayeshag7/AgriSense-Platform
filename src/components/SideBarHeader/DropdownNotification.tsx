@@ -16,7 +16,7 @@ const DropdownNotification = () => {
             setNotifying(false);
             setDropdownOpen(!dropdownOpen);
           }}
-          className="relative flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white hover:text-[#64FF64] transition"
+          className="relative flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-black hover:text-[#64FF64] transition"
         >
           {/* Ping Indicator */}
           <span
@@ -29,7 +29,7 @@ const DropdownNotification = () => {
 
           {/* Bell Icon */}
           <svg
-            className="fill-current text-black"
+            className="fill-current text-black dark:text-white"
             width="18"
             height="18"
             viewBox="0 0 18 18"
@@ -41,9 +41,11 @@ const DropdownNotification = () => {
 
         {/* Dropdown Panel */}
         {dropdownOpen && (
-          <div className="absolute right-0 top-full mt-2 w-80 rounded-md border border-gray-200 bg-white shadow-lg z-50">
-            <div className="px-4 py-3 border-b border-gray-200">
-              <h5 className="text-sm font-semibold text-gray-800">Notifications</h5>
+          <div className="absolute right-0 top-full mt-2 w-80 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] shadow-lg z-50 transition-colors duration-300">
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <h5 className="text-sm font-semibold text-gray-800 dark:text-white">
+                Notifications
+              </h5>
             </div>
 
             <ul className="max-h-80 overflow-y-auto">
@@ -72,11 +74,17 @@ const DropdownNotification = () => {
                 <li key={index}>
                   <Link
                     href="#"
-                    className="flex flex-col gap-1 px-4 py-3 border-t border-gray-100 hover:bg-gray-50 transition"
+                    className="flex flex-col gap-1 px-4 py-3 border-t border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#1e1e1e] transition"
                   >
-                    <p className="text-sm text-gray-900 font-medium">{item.title}</p>
-                    <p className="text-xs text-gray-600">{item.body}</p>
-                    <p className="text-xs text-gray-400">{item.date}</p>
+                    <p className="text-sm text-gray-900 dark:text-white font-medium">
+                      {item.title}
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      {item.body}
+                    </p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">
+                      {item.date}
+                    </p>
                   </Link>
                 </li>
               ))}

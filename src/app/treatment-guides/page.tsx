@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { IconArrowLeft } from '@tabler/icons-react';
+import DarkModeToggle from '@/components/ui/DarkModeToggle';
 
 const guides = [
   {
@@ -45,24 +46,29 @@ const guides = [
 
 export default function TreatmentGuidesPage() {
   return (
-    <main className="min-h-screen px-12 pt-16 pb-20 relative">
+    <main className="min-h-screen bg-gray-100 dark:bg-[#1e1e1e] px-12 pt-8 pb-12 relative">
 
-      {/* Back Arrow */}
-      <Link
-        href="/resources"
-        className="absolute top-6 left-10 flex items-center gap-2 text-black hover:text-[#64FF64] transition-colors"
-      >
-        <IconArrowLeft className="w-8 h-8" />
-      </Link>
+      <div className='flex flex-row justify-between items-center mb-8'>
+        {/* Back Arrow */}
+        <Link
+            href="/resources"
+            className="flex items-center gap-2 text-black dark:text-white hover:text-[#64FF64] dark:hover:text-[#64FF64] transition-colors"
+          >
+            <IconArrowLeft className="w-8 h-8" />
+        </Link>
 
-      <h1 className="text-2xl font-bold text-gray-800 mb-8 mt-6">All Treatment Guides</h1>
+        {/* Theme Toggle */}
+        <DarkModeToggle/>
+      </div>
+
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-8 mt-6">All Treatment Guides</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {guides.map((guide) => (
           <Link
             key={guide.slug}
             href={`/treatment-guides/${guide.slug}`}
-            className="bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition p-4"
+            className="bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition p-4"
           >
             <Image
               src={guide.image}
@@ -71,8 +77,12 @@ export default function TreatmentGuidesPage() {
               height={200}
               className="rounded-md border-l border-b border-2 border-[#64FF64] mb-3 object-cover w-full h-56"
             />
-            <h3 className="text-md font-semibold text-gray-800 mb-1">{guide.title}</h3>
-            <p className="text-sm text-gray-600">{guide.description}</p>
+            <h3 className="text-md font-semibold text-gray-800 dark:text-white mb-1">
+              {guide.title}
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {guide.description}
+            </p>
           </Link>
         ))}
       </div>

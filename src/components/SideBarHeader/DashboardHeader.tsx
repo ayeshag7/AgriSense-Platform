@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
+import DarkModeToggle from '../ui/DarkModeToggle';
 
 export default function DashboardHeader() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,6 +34,7 @@ export default function DashboardHeader() {
 
       {/* Right Side Dropdowns */}
       <div className="flex items-center gap-6 ml-4">
+        <DarkModeToggle/>
         <DropdownNotification />
         <DropdownUser />
       </div>

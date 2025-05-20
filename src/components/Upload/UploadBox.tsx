@@ -3,6 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FiUploadCloud } from 'react-icons/fi';
+import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
+import { getDiagnosisFromAPI } from '@/utils/diagnosis';
+import { saveCropImageMetadata } from '@/lib/firestore';
+import { auth } from "@/lib/firebase";
+
 
 export default function UploadBox() {
   const [preview, setPreview] = useState<string | null>(null);
@@ -57,16 +62,40 @@ export default function UploadBox() {
     reader.readAsDataURL(file);
   };
 
-  const handleDiagnose = () => {
+  const handleDiagnose = async () => {
+  try {
     setLoading(true);
-    const interval = setInterval(() => {
-      setStatusIndex((prev) => (prev + 1) % statusTexts.length);
-    }, 3000);
-    setTimeout(() => {
-      clearInterval(interval);
-      router.push('/diagnosis');
-    }, 12000);
-  };
+
+    const userId = auth.currentUser?.uid;
+    console.log("Authenticated user:", userId);
+
+    const file = pendingFile || (preview && await fetch(preview).then(res => res.blob()).then(blob => new File([blob], "upload.jpg"))) || null;
+    if (!file) throw new Error("No file selected");
+
+    // 1. Upload to Cloudinary
+    const imageUrl = await uploadToCloudinary(file);
+    console.log(imageUrl)
+
+    // 2. Send to ML API
+    const diagnosis = await getDiagnosisFromAPI(imageUrl);
+    console.log(diagnosis)
+
+    // 3. Save to Firestore
+    const docId = await saveCropImageMetadata(imageUrl, diagnosis);
+    console.log(docId)
+
+    // 4. Store in session for viewing
+    sessionStorage.setItem('diagnosisDocId', docId);
+    sessionStorage.setItem('diagnosisData', JSON.stringify(diagnosis));
+    sessionStorage.setItem('uploadedImage', imageUrl);
+
+    router.push('/diagnosis');
+  } catch (err) {
+    console.error(err);
+    setError("Something went wrong during diagnosis.");
+    setLoading(false);
+  }
+};
 
   const confirmReplaceImage = () => {
     if (pendingFile) {

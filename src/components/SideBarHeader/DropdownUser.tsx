@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -8,10 +8,28 @@ import ClickOutside from './ClickOutside';
 import { logout } from '@/lib/authentication';
 import { toast } from 'react-toastify';
 import { FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { fetchUserProfile } from '@/lib/profile';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
+
+  const [fullName, setFullName] = useState('Loading...');
+  const [profileImage, setProfileImage] = useState('/images/user-profile.png');
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const profile = await fetchUserProfile();
+        setFullName(profile.fullName || 'Unnamed User');
+        setProfileImage(profile.profileImage || '/images/user-profile.png');
+      } catch (err) {
+        console.error('Failed to load user profile:', err);
+      }
+    };
+
+    loadUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -31,11 +49,11 @@ const DropdownUser = () => {
         className="flex items-center gap-3"
       >
         <span className="hidden lg:block text-sm font-medium text-black dark:text-white">
-          Asim Raza
+          {fullName}
         </span>
 
         <span className="h-10 w-10 rounded-full overflow-hidden border border-gray-300 dark:border-gray-600">
-          <Image src="/images/user-profile.png" alt="User" width={40} height={40} />
+          <Image src={profileImage} alt="Current User Profile" width={40} height={40} />
         </span>
       </button>
 

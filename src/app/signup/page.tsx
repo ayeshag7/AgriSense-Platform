@@ -24,10 +24,12 @@ export default function SignUpPage() {
 
   return (
     <>
+      <main className="min-h-screen flex items-center justify-center py-12 bg-white">
+      
       <Link href="/" className="absolute top-6 left-14 z-50 flex items-center gap-2 text-black hover:text-[#64FF64] transition-colors">
         <IconArrowLeft className="w-8 h-8" />
       </Link>
-      <main className="min-h-screen flex items-center justify-center bg-white mt-12">
+
       <div className="max-w-6xl w-full flex flex-row bg-gray-100 border border-black md:rounded-xl shadow-md overflow-hidden my-8">
 
         {/* Left: Form Section */}

@@ -1,6 +1,7 @@
 // lib/authentication.ts
 
-import { auth } from './firebase';
+import { auth, db } from './firebase';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -11,7 +12,7 @@ import {
 } from 'firebase/auth';
 
 /**
- * Sign up user using Firebase Auth
+ * Sign up user using Firebase Auth and create Firestore user profile
  * @param email - user email
  * @param password - user password
  * @param fullName - full name for profile
@@ -25,12 +26,24 @@ export const signUpWithEmail = async (
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Optional: update user's display name
+    // Update Firebase Auth display name
     if (auth.currentUser) {
       await updateProfile(auth.currentUser, {
         displayName: fullName,
       });
     }
+
+    // Create Firestore user document
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      fullName,
+      email,
+      profileImage: '', // Optional default values
+      phone: '',
+      district: '',
+      role: 'Farmer',
+      cnic: '',
+    });
 
     return { user };
   } catch (error: any) {
@@ -54,14 +67,36 @@ export const loginWithEmail = async (email: string, password: string) => {
   }
 };
 
+
 /**
- * Sign in using Google account
+ * Sign in using Google account and ensure Firestore profile exists
  */
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
+
   try {
     const result = await signInWithPopup(auth, provider);
-    return { user: result.user };
+    const user = result.user;
+
+    // Check if user profile already exists
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      // Create profile if not found
+      await setDoc(userRef, {
+        uid: user.uid,
+        fullName: user.displayName || '',
+        email: user.email,
+        profileImage: user.photoURL || '',
+        phone: '',
+        district: '',
+        role: 'Farmer',
+        cnic: '',
+      });
+    }
+
+    return { user };
   } catch (error: any) {
     console.error('Google sign-in error:', error);
     throw new Error(error.message);

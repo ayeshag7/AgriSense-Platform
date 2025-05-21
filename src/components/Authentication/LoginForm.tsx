@@ -22,7 +22,7 @@ export default function LoginForm() {
       const { user } = await loginWithEmail(email, password);
       console.log(user)
       toast.success(`Welcome back, ${user.displayName || user.email}`);
-      setTimeout(() => router.push('/dashboard'), 1000);
+      setTimeout(() => router.push('/dashboard'), 600);
     } catch (err: any) {
       toast.error(`Login failed: ${err.message}`);
     } finally {
@@ -35,7 +35,7 @@ export default function LoginForm() {
     try {
       const { user } = await signInWithGoogle();
       toast.success(`Logged in as ${user.displayName || user.email}`);
-      setTimeout(() => router.push('/dashboard'), 1000);
+      setTimeout(() => router.push('/dashboard'), 600);
     } catch (err: any) {
       toast.error(`Google sign-in failed: ${err.message}`);
     } finally {

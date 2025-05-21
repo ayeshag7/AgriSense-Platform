@@ -48,7 +48,7 @@ export default function SignUpForm() {
     try {
       const { user } = await signUpWithEmail(email, password, fullName);
       toast.success(`Account created! Welcome, ${user.displayName || 'User'}`);
-      setTimeout(() => router.push('/login'), 1000);
+      setTimeout(() => router.push('/login'), 600);
     } catch (err: any) {
       toast.error(`Sign-up failed: ${err.message}`);
     } finally {
@@ -61,7 +61,7 @@ export default function SignUpForm() {
   try {
     const { user } = await signInWithGoogle();
     toast.success(`Signed in as ${user.displayName || user.email}`);
-    setTimeout(() => router.push('/login'), 1000);
+    setTimeout(() => router.push('/login'), 600);
   } catch (err: any) {
     toast.error(`Google sign-in failed: ${err.message}`);
   } finally {

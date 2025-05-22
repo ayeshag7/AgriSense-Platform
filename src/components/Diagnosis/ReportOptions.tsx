@@ -1,8 +1,42 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { saveAs } from 'file-saver';
+import { generateDiagnosisPDF } from '@/utils/generateReport';
 
-export default function ReportOptions() {
+interface ReportOptionsProps {
+  image: string;
+  disease: string;
+  confidence: number;
+  severity: 'Low' | 'Moderate' | 'High';
+  treatment: string | null;
+}
+
+export default function ReportOptions({
+  image,
+  disease,
+  confidence,
+  severity,
+  treatment,
+}: ReportOptionsProps) {
+  const handleDownloadPDF = async () => {
+    try {
+      const pdfBytes = await generateDiagnosisPDF({
+        disease,
+        confidence,
+        severity,
+        treatment,
+        imageUrl: image,
+      });
+
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      saveAs(blob, 'diagnosis-report.pdf');
+    } catch (err) {
+      console.error('Failed to generate PDF:', err);
+      alert('Error creating PDF. Please try again.');
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -11,17 +45,19 @@ export default function ReportOptions() {
       className="bg-white dark:bg-black rounded-lg shadow-sm p-6 mt-6 border border-gray-300 dark:border-gray-700 transition-colors duration-300"
     >
       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-8">Save or Share This Diagnosis</h2>
-      
+
       <div className="flex flex-col md:flex-row justify-between gap-4">
-        {/* Highlighted Download Button */}
-        <button className="cursor-pointer flex-1 px-4 py-2 border-2 border-[#64FF64] text-black dark:text-white dark:hover:text-black rounded-md hover:bg-[#64FF64] font-semibold transition">
+        <button
+          onClick={handleDownloadPDF}
+          className="cursor-pointer flex-1 px-4 py-2 border-2 border-[#64FF64] text-black dark:text-white dark:hover:text-black rounded-md hover:bg-[#64FF64] font-semibold transition"
+        >
           Download PDF Report
         </button>
 
-        {/* Secondary Buttons */}
         <button className="cursor-pointer flex-1 px-4 py-2 border border-gray-400 dark:border-gray-600 text-black dark:text-white rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e] transition">
           Copy Timeline QR Link
         </button>
+
         <button className="cursor-pointer flex-1 px-4 py-2 border border-gray-400 dark:border-gray-600 text-black dark:text-white rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e] transition">
           Save to History
         </button>

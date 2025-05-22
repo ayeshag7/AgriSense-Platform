@@ -65,6 +65,7 @@ export default function UploadBox() {
   const handleDiagnose = async () => {
   try {
     setLoading(true);
+    setStatusIndex(0);
 
     const userId = auth.currentUser?.uid;
     console.log("Authenticated user:", userId);
@@ -73,14 +74,17 @@ export default function UploadBox() {
     if (!file) throw new Error("No file selected");
 
     // 1. Upload to Cloudinary
+    setStatusIndex(1);
     const imageUrl = await uploadToCloudinary(file);
     console.log(imageUrl)
 
     // 2. Send to ML API
+    setStatusIndex(2);
     const diagnosis = await getDiagnosisFromAPI(imageUrl);
     console.log(diagnosis)
 
     // 3. Save to Firestore
+    setStatusIndex(3);
     const docId = await saveCropImageMetadata(imageUrl, diagnosis);
     console.log(docId)
 

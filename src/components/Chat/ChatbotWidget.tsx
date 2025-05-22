@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { FiSend, FiPlus } from 'react-icons/fi';
+import { fetchUserProfile } from '@/lib/profile';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -14,19 +15,47 @@ const dummyReply = (msg: string) => {
 };
 
 export default function ChatbotWidget() {
+
+  const [profileImage, setProfileImage] = useState('/images/user-profile.png');
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const profile = await fetchUserProfile();
+        setProfileImage(profile.profileImage || '/images/user-profile.png');
+      } catch (err) {
+        console.error('Failed to load user profile:', err);
+      }
+    };
+
+    loadUser();
+  }, []);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMessages: Message[] = [...messages, { role: 'user', content: input }];
-    setMessages([
-      ...newMessages,
-      { role: 'assistant', content: dummyReply(input) },
-    ]);
+    const userMessage = { role: 'user' as const, content: input };
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
+
+    try {
+      const res = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: input })
+      });
+
+      const data = await res.json();
+      const assistantMessage = { role: 'assistant' as const, content: data.reply || 'Sorry, no response received.' };
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (error) {
+      setMessages((prev) => [...prev, { role: 'assistant', content: '⚠️ Error getting response from AgriBot.' }]);
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -35,9 +64,9 @@ export default function ChatbotWidget() {
 
   return (
     <div className="bg-gray-100 dark:bg-black flex items-start justify-center px-4 py-6 transition-colors duration-300">
-      <div className="w-full max-w-3xl bg-white dark:bg-[#1a1a1a] rounded-lg shadow-lg flex flex-col border border-gray-300 dark:border-gray-700">
+      <div className="w-full max-w-3xl bg-white dark:bg-[#1a1a1a] rounded-lg shadow-lg flex flex-col border border-gray-300 dark:border-gray-500">
         {/* Header */}
-        <div className="bg-[#d8f8d8] dark:bg-[#64FF64] border-b border-gray-400 dark:border-gray-600 text-black font-bold text-lg px-6 py-4 flex items-center justify-between rounded-t-lg">
+        <div className="bg-[#d8f8d8] dark:bg-black border-b border-gray-400 dark:border-gray-400 text-black dark:text-[#64FF64] font-bold text-lg px-6 py-4 flex items-center justify-between rounded-t-lg">
           <div className="flex items-center gap-2">
             <Image
               src="/images/chatbot.png"
@@ -48,9 +77,9 @@ export default function ChatbotWidget() {
             />
             AgriBot
           </div>
-          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-black shadow">
+          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-black dark:border-[#64FF64] shadow">
             <Image
-              src="/images/user-profile.png"
+              src={profileImage}
               alt="User"
               width={32}
               height={32}
@@ -60,7 +89,7 @@ export default function ChatbotWidget() {
         </div>
 
         {/* Chat Body */}
-        <div className="px-4 py-3 h-72 overflow-y-auto space-y-4">
+        <div className="px-4 py-3 h-80 overflow-y-auto space-y-4">
           {messages.map((msg, idx) => (
             <div
               key={idx}

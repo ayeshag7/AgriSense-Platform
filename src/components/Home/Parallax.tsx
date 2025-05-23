@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function Parallax() {
   const containerRef = useRef(null);
@@ -73,10 +74,11 @@ export default function Parallax() {
             transition={{ duration: 0.8, ease: "easeInOut" }}
             className="relative w-full h-full"
           >
-            <img
+            <Image
               src="/images/fact-image.png"
-              className="absolute inset-0 w-full h-full object-cover"
               alt="Post Harvest Waste"
+              fill
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-black/30" />
             <div className="absolute top-10 left-10 text-white max-w-xl z-30">

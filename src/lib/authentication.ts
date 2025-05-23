@@ -46,7 +46,8 @@ export const signUpWithEmail = async (
     });
 
     return { user };
-  } catch (error: any) {
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     console.error('Error during sign-up:', error);
     throw new Error(error.message);
   }
@@ -61,7 +62,8 @@ export const loginWithEmail = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return { user: userCredential.user };
-  } catch (error: any) {
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     console.error('Login error:', error);
     throw new Error(error.message);
   }
@@ -97,7 +99,8 @@ export const signInWithGoogle = async () => {
     }
 
     return { user };
-  } catch (error: any) {
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     console.error('Google sign-in error:', error);
     throw new Error(error.message);
   }
@@ -109,7 +112,8 @@ export const signInWithGoogle = async () => {
 export const logout = async () => {
   try {
     await signOut(auth);
-  } catch (error: any) {
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     console.error('Logout error:', error);
     throw new Error(error.message);
   }

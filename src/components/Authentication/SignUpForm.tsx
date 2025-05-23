@@ -49,7 +49,8 @@ export default function SignUpForm() {
       const { user } = await signUpWithEmail(email, password, fullName);
       toast.success(`Account created! Welcome, ${user.displayName || 'User'}`);
       setTimeout(() => router.push('/login'), 600);
-    } catch (err: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (err: any) {
       toast.error(`Sign-up failed: ${err.message}`);
     } finally {
       setLoading(false);
@@ -62,7 +63,8 @@ export default function SignUpForm() {
     const { user } = await signInWithGoogle();
     toast.success(`Signed in as ${user.displayName || user.email}`);
     setTimeout(() => router.push('/login'), 600);
-  } catch (err: any) {
+  } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (err: any) {
     toast.error(`Google sign-in failed: ${err.message}`);
   } finally {
     setLoading(false);

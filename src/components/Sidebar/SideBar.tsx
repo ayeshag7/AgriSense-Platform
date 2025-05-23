@@ -19,6 +19,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
   );
 
+  console.log(setSidebarExpanded)
+
   // Close sidebar on outside click
   useEffect(() => {
     const clickHandler = (e: MouseEvent) => {
@@ -48,9 +50,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
     const body = document.querySelector('body');
     if (!body) return;
-    sidebarExpanded
-      ? body.classList.add('sidebar-expanded')
-      : body.classList.remove('sidebar-expanded');
+    if (sidebarExpanded) {
+        body.classList.add('sidebar-expanded');
+      } else {
+        body.classList.remove('sidebar-expanded');
+      }
   }, [sidebarExpanded]);
 
   return (

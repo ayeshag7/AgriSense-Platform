@@ -3,6 +3,7 @@ import { auth, db } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 // Fetch current user's profile
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchUserProfile = async (): Promise<any> => {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

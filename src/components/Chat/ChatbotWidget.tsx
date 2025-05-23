@@ -10,10 +10,6 @@ type Message = {
   content: string;
 };
 
-const dummyReply = (msg: string) => {
-  return `This is a placeholder response to: "${msg}"\n\nFurther explanation will appear here once connected to AI backend.`;
-};
-
 export default function ChatbotWidget() {
 
   const [profileImage, setProfileImage] = useState('/images/user-profile.png');

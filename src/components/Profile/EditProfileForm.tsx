@@ -15,6 +15,7 @@ interface EditProfileFormProps {
     profileImage?: string;
     cnic?: string;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSave: (updated: any) => void;
   onCancel: () => void;
 }

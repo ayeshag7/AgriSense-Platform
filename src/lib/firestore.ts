@@ -1,6 +1,7 @@
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function saveCropImageMetadata(imageUrl: string, diagnosisData: any) {
   const userId = auth.currentUser?.uid;
   console.log("Current User UID:", userId);

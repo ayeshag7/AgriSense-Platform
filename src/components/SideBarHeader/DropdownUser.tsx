@@ -36,7 +36,8 @@ const DropdownUser = () => {
       await logout();
       toast.success('Logged out successfully!');
       router.push('/login');
-    } catch (error: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
       toast.error('Failed to log out.');
       console.error(error);
     }

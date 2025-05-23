@@ -23,7 +23,7 @@ export default function AccountSettings() {
             onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#1e1e1e] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#64FF64]"
           />
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">We'll use this to contact you.</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">We will use this to contact you.</p>
         </div>
 
         {/* Phone */}

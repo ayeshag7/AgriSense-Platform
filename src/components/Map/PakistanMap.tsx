@@ -193,6 +193,7 @@ export default function PakistanMap() {
       .then((data: FeatureCollection) => setAdm3(data));
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onEachDistrict = (feature: Feature<Geometry, any>, layer: Layer) => {
     const name = feature.properties?.NAME_3 || 'Unknown';
 

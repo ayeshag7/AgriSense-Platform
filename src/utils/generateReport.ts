@@ -1,4 +1,4 @@
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { PDFDocument, StandardFonts } from 'pdf-lib';
 
 export async function generateDiagnosisPDF({
   disease,
@@ -105,6 +105,7 @@ export async function generateDiagnosisPDF({
 }
 
 // Utility to wrap long lines manually
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function wrapText(text: string, font: any, fontSize: number, maxWidth: number): string[] {
   const words = text.split(/\s+/);
   const lines: string[] = [];

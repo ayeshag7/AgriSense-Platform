@@ -12,7 +12,18 @@ import DarkModeToggle from '@/components/ui/DarkModeToggle';
 export default function ProfilePage() {
   useAuthGuard();
 
-  const [userData, setUserData] = useState<any>(null);
+  interface UserProfile {
+  fullName: string;
+  email: string;
+  phone?: string;
+  cnic?: string;
+  role?: string;
+  district?: string;
+  profileImage?: string;
+  }
+
+
+  const [userData, setUserData] = useState<UserProfile | null>(null);
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {

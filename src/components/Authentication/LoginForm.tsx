@@ -23,7 +23,8 @@ export default function LoginForm() {
       console.log(user)
       toast.success(`Welcome back, ${user.displayName || user.email}`);
       setTimeout(() => router.push('/dashboard'), 600);
-    } catch (err: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (err: any) {
       toast.error(`Login failed: ${err.message}`);
     } finally {
       setLoading(false);
@@ -36,7 +37,8 @@ export default function LoginForm() {
       const { user } = await signInWithGoogle();
       toast.success(`Logged in as ${user.displayName || user.email}`);
       setTimeout(() => router.push('/dashboard'), 600);
-    } catch (err: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (err: any) {
       toast.error(`Google sign-in failed: ${err.message}`);
     } finally {
       setLoading(false);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
-import L, { GeoJSON as LeafletGeoJSON, Layer, PathOptions } from 'leaflet';
+import { GeoJSON as LeafletGeoJSON, Layer, PathOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 

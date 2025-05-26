@@ -49,3 +49,6 @@ Then open your browser at http://localhost:3000 to view the app.
 * All components are built with responsiveness in mind. Mobile-first design supported.
 * Use `npm run build` and `npm start` to build and preview the production app.
 
+## Project Demo
+View the web app deployed on Vercel here:
+https://agri-sense-platform.vercel.app/
